@@ -19,22 +19,22 @@ def pytest_configure():
     print(f"Project root added to path: {project_root}")
 
 @pytest.fixture
-def base_page_methods(driver):
+def base_page(driver):
     """Фикстура для базовых методов страниц"""
-    from pages.base_page_methods import BasePageMethods
-    return BasePageMethods(driver)
+    from pages.base_page import BasePage
+    return BasePage(driver)
 
 @pytest.fixture
-def order_page_methods(driver):
+def order_page(driver):
     """Фикстура для методов страницы заказа"""
-    from pages.order_page_methods import OrderPageMethods
-    return OrderPageMethods(driver)
+    from pages.order_page import OrderPage
+    return OrderPage(driver)
 
 @pytest.fixture
-def main_page_methods(driver):
+def main_page(driver):
     """Фикстура для методов главной страницы"""
-    from pages.main_page_methods import MainPageMethods
-    return MainPageMethods(driver)
+    from pages.main_page import MainPage
+    return MainPage(driver)
     
 @pytest.fixture(scope="function")
 def driver():

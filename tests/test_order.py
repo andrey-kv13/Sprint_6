@@ -1,6 +1,6 @@
 import pytest
 import allure
-from pages.order_page_methods import OrderPageMethods
+from pages.order_page import OrderPage
 
 class TestOrder:
     """Тесты для проверки оформления заказа"""
@@ -10,8 +10,8 @@ class TestOrder:
     @allure.story("Полный цикл заказа")
     @allure.title("Оформление заказа через {order_button[0]}")
     @pytest.mark.parametrize("button_name, test_data", 
-                             OrderPageMethods.get_order_test_data())
-    def test_order_submit(self, base_page_methods, order_page_methods, button_name, test_data):
+                             OrderPage.get_order_test_data())
+    def test_order_submit(self, base_page, order_page, button_name, test_data):
         """Проверка успешного оформления заказа самоката
         
         Steps:
@@ -25,25 +25,25 @@ class TestOrder:
         
         try:
             with allure.step(f"Начать оформление заказа из {button_name}"):
-                base_page_methods.click(button_name)
+                base_page.click(button_name)
             
             with allure.step("Заполнить форму личных данных"):
-                order_page_methods.populate_user_form_by_user_data(test_data)
+                order_page.populate_user_form_by_user_data(test_data)
             
             with allure.step("Перейти к форме аренды"):
-                order_page_methods.click_next_button()
+                order_page.click_next_button()
             
             with allure.step("Заполнить форму аренды"):
-                order_page_methods.populate_order_form_by_user_data(test_data)
+                order_page.populate_order_form_by_user_data(test_data)
 
             with allure.step("Оформить заказ"):
-                order_page_methods.click_order_button()
+                order_page.click_order_button()
            
             with allure.step("Подтвердить заказ"):    
-                order_page_methods.confirm_order()
+                order_page.confirm_order()
             
             with allure.step("Проверить сообщение об успешном заказе"):
-                message = order_page_methods.check_success_message_displayed()
+                message = order_page.check_success_message_displayed()
                 
                 assert "Заказ оформлен" in message, \
                     f"Ожидалось 'Заказ оформлен', но получено: '{message}'"
